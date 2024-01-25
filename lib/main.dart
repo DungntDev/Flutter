@@ -118,6 +118,12 @@ class _ProductListScreenState extends State<ProductListScreen>{
                 height: 50,
                 fit: BoxFit.cover,
               ),
+              onTap: (){ //click vao item
+                Navigator.push(context, 
+                    MaterialPageRoute(builder: (context)=> ProductDetailScreen(products[index])
+                    ),
+                );
+              },
             );
           },
         )
@@ -126,6 +132,65 @@ class _ProductListScreenState extends State<ProductListScreen>{
       ),
     );
   }
+}
+//Dinh nghia lop ChiTietSanPham
+class ProductDetailScreen extends StatelessWidget{
+  final Product product;
+  ProductDetailScreen(this.product);
+  //giao dien
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Product Detail'),
+        actions: [
+          ElevatedButton(onPressed: (){
+            Navigator.push(context, 
+            MaterialPageRoute(builder: (Context)=> CartScreen()),);
+          },
+        child: Icon(Icons.shopping_cart),
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(0),
+          ),
+          ),
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(padding: const EdgeInsets.all(8),
+          child: Text('Brand: ${product.brands_filter_facet}'),
+          ),
+          Image.network(product.search_image),
+          Padding(padding: const EdgeInsets.all(8),
+            child: Text('Info: ${product.product_additional_info}',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(padding: const EdgeInsets.all(8),
+          child: Text('ID: ${product.styleid}'),
+          ),
+          Padding(padding: const EdgeInsets.all(8),
+            child: Text('Price: ${product.price}'),
+          )
+        ],
+      ),
+    );
+  }
+
+}
+class CartScreen extends  StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Shopping Cart"),),
+      body: Center(
+        child: Text('Gio hang cua ban'),
+      ),
+    );
+  }
+  
 }
 class Product {
   String search_image;
